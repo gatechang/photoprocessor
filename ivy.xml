@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+    <info organisation="com.abacusbead" module="photoprocessor"/>
+    <dependencies>
+        <dependency org="org.apache.sanselan" name="sanselan" rev="0.97-incubator"/>
+        <exclude org="*" ext="*" type="source" conf="*"/>
+        <exclude org="*" ext="*" type="javadoc" conf="*"/>
+    </dependencies>
+</ivy-module>
