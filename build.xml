@@ -1,0 +1,47 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="photoprocessor" default="jar" basedir=".">
+    <property name="user.home" location="/Users/mizhang"/>
+    <property name="src" location="${basedir}/src"/>
+    <property name="lib" location="${basedir}/lib"/>
+    <property name="build" location="${basedir}/build"/>
+    <property name="dist" location="${basedir}/dist"/>
+    <property name="main-class" value="com.abacusbead.photoprocessor.Renamer"/>
+  
+
+    <path id="classpath">
+        <fileset dir="${lib}" includes="**/*.jar"/>
+    </path>
+
+    <target name="bootstrap" description="Used to install the ivy task jar">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"/>
+    </target>
+    
+    <target name="resolve" depends="bootstrap" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve/>
+    </target>
+
+    <target name="compile" depends="resolve" description="--> compile the java code">
+        <mkdir dir="${build}"/>
+        <javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" depends="compile" description="---> build the jar file">
+        <mkdir dir="${dist}"/> 
+        <jar jarfile="${dist}/${ant.project.name}.jar" basedir="${build}"/>
+    </target>
+
+    <target name="run" depends="jar">
+        <java classname="${main-class}">
+            <classpath>
+                <path refid="classpath"/>
+                <path location="${dist}/${ant.project.name}.jar"/>
+            </classpath>
+            <arg value="${dir}"/>
+        </java>
+    </target>
+
+    <target name="clean" description="---> clean up">
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
