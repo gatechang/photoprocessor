@@ -10,6 +10,7 @@ import org.apache.sanselan.ImageReadException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -28,7 +29,7 @@ public class Renamer {
         DEFAULT_OUTOUTFORMATSTRING = "yyyy.MM.dd_HH.mm.ss";
         exifInputFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
 
-//        exifInputFormat.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+        exifInputFormat.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
     }
 
     public static boolean renameByDate(String baseDir, File file, SimpleDateFormat outputFormat) throws IOException, ImageReadException, ParseException {
